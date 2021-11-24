@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@c6fc/sonnetry": "^1.0.0",
+    "@jahed/terraform": "^0.15.4",
+    "aws-sdk": "^2.1033.0"
+  }
+}
