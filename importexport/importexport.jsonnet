@@ -5,6 +5,9 @@ local context = std.extVar('context');
 		output: {
 			context: {
 				value: context
+			},
+			custom_function: {
+				value: std.native('multiply')(12, 42)
 			}
 		}
 	}

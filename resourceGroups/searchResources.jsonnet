@@ -16,7 +16,7 @@ local getBootstrapBucket() =
 					ResourceTypeFilters: ["AWS::S3::Bucket"],
 					TagFilters: [{
 						Key: "sonnetry-project",
-						Values: ["test"]
+						Values: ["true"]
 					}]
 				}, '')
 			}

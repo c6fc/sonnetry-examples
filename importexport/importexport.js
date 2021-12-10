@@ -3,7 +3,7 @@ const { Sonnet } = require('@c6fc/sonnetry');
 (async () => {
   const sonnetry = new Sonnet({
     // The folder to write the configurations into
-    renderPath: './render',
+    renderPath: '../render',
 
     // Whether to delete the *.tf.json files from the renderPath before rendering    
     cleanBeforeRender: true
@@ -19,6 +19,12 @@ const { Sonnet } = require('@c6fc/sonnetry');
   // available as std.extVar('context') Jsonnet
   sonnetry.export('context', context);
 
+  // Add a custom function that can be accessed via 'std.native()'
+  // Custom functions can also accept returned promises.
+  sonnetry.addFunction('multiply', (a, b) => {
+    return a * b;
+  }, "a", "b");
+
   // Render the Jsonnet file, returning a raw object.
   const json = await sonnetry.render('importexport.jsonnet');
 
@@ -26,5 +32,5 @@ const { Sonnet } = require('@c6fc/sonnetry');
   sonnetry.write();
 
   // Run `terraform apply` on the rendered files.
-  sonnetry.apply();
+  sonnetry.apply(true, true);
 })();

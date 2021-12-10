@@ -9,6 +9,9 @@ forward them all to the bucket.
 
 If there are no regions without Cloudtrail, do nothing.
 
+NOTE: The bucket created in this example uses a fake policy. The example
+is meant to demonstrate using complex logic available to Sonnetry.
+
 */
 
 local aws = import 'aws-sdk';
@@ -19,14 +22,14 @@ local regionsWithoutCloudTrail =
 		function (x) x != false,
 		std.map(
 			function(region) if (std.length(aws.api(
-				aws.client('CloudTrail', { region: "us-west-2" }),
+				aws.client('CloudTrail', { region: region }),
 				'listTrails'
 			)) == 0) then region else false,
 			regionsList
 		));
 
-{
-	[if (std.length(regionsWithoutCloudTrail) > 0) then 'missingCloudTrails.tf.json' else null]: {
+if (std.length(regionsWithoutCloudTrail) == 0) then {} else {
+	'missingCloudTrails.tf.json': {
 		resource: {
 			aws_cloudtrail: {
 				[region]: {
@@ -50,7 +53,7 @@ local regionsWithoutCloudTrail =
 			}
 		}
 	},
-	'provider.tf.json': {
+	'providers.tf.json': {
 		terraform: {
 			required_providers: {
 				aws: {
@@ -64,6 +67,6 @@ local regionsWithoutCloudTrail =
 				alias: region,
 				region: region
 			}
-		} for region in regionsList ]
-	},
+		} for region in regionsList]
+	}
 }
