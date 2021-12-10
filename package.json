@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@c6fc/sonnetry": "^1.0.0",
+    "@c6fc/sonnetry": "^1.1.1",
     "@jahed/terraform": "^0.15.4",
     "aws-sdk": "^2.1033.0"
   }
